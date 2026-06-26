@@ -695,6 +695,7 @@
     .lang-cs     { background: #178600; box-shadow: 0 0 6px rgba(23,134,0,0.5); }
     .lang-ps     { background: #4FB3D9; box-shadow: 0 0 6px rgba(79,179,217,0.5); }
     .lang-js     { background: #F1E05A; box-shadow: 0 0 6px rgba(241,224,90,0.5); }
+    .lang-ts     { background: #3178C6; box-shadow: 0 0 6px rgba(49,120,198,0.5); }
     .lang-md     { background: var(--blood); box-shadow: 0 0 6px var(--blood-glow); }
 
     /* ════════ EXPERIENCE ════════ */
@@ -1603,6 +1604,82 @@
       .hero-sun-wrap { transform: translate(-15%, -65%); opacity: 0.6; }
     }
 
+    /* ════════ UTOPIA TOKYO LAYER ════════ */
+
+    /* Pen-marker handwritten underline (uses #pen-marker SVG filter) */
+    .pen-marker {
+      position: relative;
+      display: inline-block;
+      isolation: isolate;
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+    .pen-marker::before {
+      content: '';
+      position: absolute;
+      left: -6px; right: -6px;
+      top: 28%; bottom: -2px;
+      background: rgba(255, 0, 51, 0.55);
+      filter: url(#pen-marker);
+      z-index: -1;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+    .pen-marker.cyan::before {
+      background: rgba(0, 229, 255, 0.40);
+    }
+
+    /* Coord/version eyebrow decoration */
+    .hero-coords {
+      display: flex; align-items: center; flex-wrap: wrap;
+      gap: 0.6rem; column-gap: 0.7rem;
+      margin-bottom: 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem; font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-dim);
+    }
+    .hero-coords .ey {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .hero-coords .ey--blood { color: var(--blood); text-shadow: 0 0 8px var(--blood-glow); }
+    .hero-coords .ey--cyan  { color: var(--cyan);  text-shadow: 0 0 8px var(--cyan-glow); }
+    .hero-coords .ey--matrix{ color: var(--matrix); text-shadow: 0 0 8px var(--matrix-glow); }
+    .hero-coords .sep {
+      color: var(--text-faint); font-weight: 700; padding: 0 0.15rem;
+    }
+    .hero-coords .blip {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--matrix);
+      box-shadow: 0 0 8px var(--matrix-glow);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+
+    /* "data_" eyebrow style — replaces some "// kickers" */
+    .data-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem; font-weight: 500;
+      color: var(--cyan);
+      text-transform: lowercase;
+      letter-spacing: 0.14em;
+      text-shadow: 0 0 10px var(--cyan-glow);
+    }
+    .data-eyebrow::before {
+      content: ''; width: 18px; height: 1px;
+      background: var(--blood);
+      box-shadow: 0 0 6px var(--blood-glow);
+    }
+    .data-eyebrow .underscore { color: var(--blood); text-shadow: 0 0 6px var(--blood-glow); }
+
+    /* Scramble hover: cursor + GPU smoothing */
+    [data-scramble-target] {
+      display: inline-block;
+      white-space: nowrap;
+      will-change: contents;
+    }
+
     /* ════════ REDUCED MOTION ════════ */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -1660,12 +1737,12 @@
     <span class="dot"></span>
   </a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#certifications">Certs</a></li>
-    <li><a href="#publications">Publications</a></li>
-    <li><a href="#reports">Reports</a></li>
+    <li><a href="#about" data-scramble-hover="link"><span data-scramble-target>About</span></a></li>
+    <li><a href="#projects" data-scramble-hover="link"><span data-scramble-target>Projects</span></a></li>
+    <li><a href="#experience" data-scramble-hover="link"><span data-scramble-target>Experience</span></a></li>
+    <li><a href="#certifications" data-scramble-hover="link"><span data-scramble-target>Certs</span></a></li>
+    <li><a href="#publications" data-scramble-hover="link"><span data-scramble-target>Publications</span></a></li>
+    <li><a href="#reports" data-scramble-hover="link"><span data-scramble-target>Reports</span></a></li>
   </ul>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
     <span></span><span></span><span></span>
@@ -1695,6 +1772,18 @@
 
   <div class="hero-content">
 
+    <div class="hero-coords" aria-hidden="true">
+      <span class="ey ey--matrix"><span class="blip"></span>ONLINE</span>
+      <span class="sep">/</span>
+      <span class="ey">NODE: lyethar</span>
+      <span class="sep">/</span>
+      <span class="ey">LAT 35.6762&deg;N</span>
+      <span class="sep">/</span>
+      <span class="ey">LONG 139.6503&deg;E</span>
+      <span class="sep">/</span>
+      <span class="ey ey--blood">PORTFOLIO v3.2.6</span>
+    </div>
+
     <div class="hero-terminal">
       <span class="ln-prompt">&gt;</span> <span class="ln-key">SYS_INIT</span>: <span class="ln-status">AUTHORIZED</span><br>
       <span class="ln-prompt">&gt;</span> <span class="ln-key">USER</span>: <span class="ln-val">fabian@crespo</span><br>
@@ -1709,7 +1798,7 @@
 
     <p class="hero-sub">
       <strong>Principal Penetration Tester</strong> &mdash; 4+ years of offensive security operations
-      across network, application, <span class="accent-c">AI/ML</span>, and <span class="accent-m">cloud</span>
+      across network, application, <span class="pen-marker">AI/ML</span>, and <span class="pen-marker cyan">cloud</span>
       assessments. Adversarial testing for healthcare, finance, and tech.
     </p>
 
@@ -1731,29 +1820,29 @@
     </div>
 
     <div class="hero-cta">
-      <a href="#experience" class="btn btn-primary">
-        <i class="fas fa-terminal"></i> Execute_Experience
+      <a href="#experience" class="btn btn-primary" data-scramble-hover="link">
+        <i class="fas fa-terminal"></i> <span data-scramble-target>&gt;_EXECUTE_EXPERIENCE</span>
       </a>
-      <a href="#reports" class="btn btn-ghost">
-        <i class="fas fa-file-shield"></i> Sample_Reports
+      <a href="#reports" class="btn btn-ghost" data-scramble-hover="link">
+        <i class="fas fa-file-shield"></i> <span data-scramble-target>&gt;_SAMPLE_REPORTS</span>
       </a>
     </div>
 
     <div class="hero-socials">
-      <a href="https://github.com/lyethar" target="_blank" rel="noopener" class="social-link">
-        <i class="fab fa-github"></i> GitHub
+      <a href="https://github.com/lyethar" target="_blank" rel="noopener" class="social-link" data-scramble-hover="link">
+        <i class="fab fa-github"></i> <span data-scramble-target>GitHub</span>
       </a>
-      <a href="https://www.linkedin.com/in/fabian-crespo-5aa803228/" target="_blank" rel="noopener" class="social-link">
-        <i class="fab fa-linkedin"></i> LinkedIn
+      <a href="https://www.linkedin.com/in/fabian-crespo-5aa803228/" target="_blank" rel="noopener" class="social-link" data-scramble-hover="link">
+        <i class="fab fa-linkedin"></i> <span data-scramble-target>LinkedIn</span>
       </a>
-      <a href="https://lyethar.gitbook.io/methodology" target="_blank" rel="noopener" class="social-link">
-        <i class="fas fa-book"></i> Methodology
+      <a href="https://lyethar.gitbook.io/methodology" target="_blank" rel="noopener" class="social-link" data-scramble-hover="link">
+        <i class="fas fa-book"></i> <span data-scramble-target>Methodology</span>
       </a>
-      <a href="https://profile.hackthebox.com/profile/019dadf6-ef81-7179-918c-1d35fdf9ea16" target="_blank" rel="noopener" class="social-link">
-        <i class="fas fa-cube"></i> HackTheBox
+      <a href="https://profile.hackthebox.com/profile/019dadf6-ef81-7179-918c-1d35fdf9ea16" target="_blank" rel="noopener" class="social-link" data-scramble-hover="link">
+        <i class="fas fa-cube"></i> <span data-scramble-target>HackTheBox</span>
       </a>
-      <a href="mailto:fabianbarrios983@gmail.com" class="social-link">
-        <i class="fas fa-envelope"></i> Email
+      <a href="mailto:fabianbarrios983@gmail.com" class="social-link" data-scramble-hover="link">
+        <i class="fas fa-envelope"></i> <span data-scramble-target>Email</span>
       </a>
     </div>
   </div>
@@ -1839,7 +1928,7 @@
     <div class="project-category">
       <div class="category-header">
         <span class="category-title"><span class="bracket">[</span> AI Projects <span class="bracket">]</span></span>
-        <span class="category-count">04 entries</span>
+        <span class="category-count">05 entries</span>
         <div class="category-rule"></div>
       </div>
       <div class="projects-grid">
@@ -1867,6 +1956,12 @@
           <p class="project-desc">MCP Server Security Analysis Tool &mdash; built for assessing the security posture of Model Context Protocol servers, a key attack surface in agentic AI deployments.</p>
           <span class="project-lang"><span class="lang-dot lang-python"></span> Python</span>
         </a>
+        <a href="https://github.com/lyethar/HexProbe" target="_blank" rel="noopener" class="project-card">
+          <div class="project-num">// 05</div>
+          <div class="project-name">HexProbe <i class="fas fa-arrow-up-right-from-square"></i></div>
+          <p class="project-desc">Browser-based red-teaming workbench for LLM applications. Ships a curated library of 137+ attack prompts and supports live endpoint probing, determinism analysis, structured test logging with AI-assisted evaluation, and exploit-chain visualization &mdash; all client-side with no backend.</p>
+          <span class="project-lang"><span class="lang-dot lang-ts"></span> TypeScript</span>
+        </a>
       </div>
     </div>
 
@@ -1879,25 +1974,25 @@
       </div>
       <div class="projects-grid">
         <a href="https://github.com/lyethar/azure_collect" target="_blank" rel="noopener" class="project-card">
-          <div class="project-num">// 05</div>
+          <div class="project-num">// 06</div>
           <div class="project-name">azure_collect <i class="fas fa-arrow-up-right-from-square"></i></div>
           <p class="project-desc">Modular Azure / Entra ID collection and tool orchestration scripts for cloud penetration testing. Automates enumeration of identities, roles, and permissions across Azure tenants.</p>
           <span class="project-lang"><span class="lang-dot lang-python"></span> Python</span>
         </a>
         <a href="https://github.com/lyethar/AWS-Exploitation-Tooling" target="_blank" rel="noopener" class="project-card">
-          <div class="project-num">// 06</div>
+          <div class="project-num">// 07</div>
           <div class="project-name">AWS-Exploitation-Tooling <i class="fas fa-arrow-up-right-from-square"></i></div>
           <p class="project-desc">Scripts for exploiting AWS services &mdash; built for ARTE labs covering IAM abuse, privilege escalation, storage enumeration, and cross-account trust exploitation.</p>
           <span class="project-lang"><span class="lang-dot lang-python"></span> Python</span>
         </a>
         <a href="https://github.com/lyethar/CloudFox-Command-Runner" target="_blank" rel="noopener" class="project-card">
-          <div class="project-num">// 07</div>
+          <div class="project-num">// 08</div>
           <div class="project-name">CloudFox-Command-Runner <i class="fas fa-arrow-up-right-from-square"></i></div>
           <p class="project-desc">Automation script for running CloudFox commands during AWS penetration tests. Streamlines cloud enumeration workflows and produces organized output for reporting.</p>
           <span class="project-lang"><span class="lang-dot lang-python"></span> Python</span>
         </a>
         <a href="https://github.com/lyethar/Sirocco" target="_blank" rel="noopener" class="project-card">
-          <div class="project-num">// 08</div>
+          <div class="project-num">// 09</div>
           <div class="project-name">Sirocco <i class="fas fa-arrow-up-right-from-square"></i></div>
           <p class="project-desc">PowerShell password-spraying tool for Microsoft Online (Azure / Entra ID / Office 365) that routes every authentication attempt through a FireProx API Gateway endpoint, rotating the source IP per request.</p>
           <span class="project-lang"><span class="lang-dot lang-ps"></span> PowerShell</span>
@@ -1914,19 +2009,19 @@
       </div>
       <div class="projects-grid">
         <a href="https://github.com/lyethar/URL-Importer" target="_blank" rel="noopener" class="project-card">
-          <div class="project-num">// 09</div>
+          <div class="project-num">// 10</div>
           <div class="project-name">URL-Importer <i class="fas fa-arrow-up-right-from-square"></i></div>
           <p class="project-desc">Burp Suite extension for bulk URL importing. Streamlines web application testing by automating request importing into the Burp proxy &mdash; eliminates tedious manual entry during large-scope assessments.</p>
           <span class="project-lang"><span class="lang-dot lang-python"></span> Python</span>
         </a>
         <a href="https://github.com/lyethar/pySpider" target="_blank" rel="noopener" class="project-card">
-          <div class="project-num">// 10</div>
+          <div class="project-num">// 11</div>
           <div class="project-name">pySpider <i class="fas fa-arrow-up-right-from-square"></i></div>
           <p class="project-desc">Tool for harvesting JavaScript files from web applications for endpoint discovery and attack surface mapping. Accelerates manual JS analysis during web application penetration tests.</p>
           <span class="project-lang"><span class="lang-dot lang-python"></span> Python</span>
         </a>
         <a href="https://github.com/lyethar/AgentE" target="_blank" rel="noopener" class="project-card">
-          <div class="project-num">// 11</div>
+          <div class="project-num">// 12</div>
           <div class="project-name">AgentE <i class="fas fa-arrow-up-right-from-square"></i></div>
           <p class="project-desc">Orchestration tool designed to facilitate the reconnaissance process during web application penetration tests. Streamlines and automates information-gathering workflows.</p>
           <span class="project-lang"><span class="lang-dot lang-python"></span> Python</span>
@@ -1943,7 +2038,7 @@
       </div>
       <div class="projects-grid">
         <a href="https://github.com/lyethar/Brenmon" target="_blank" rel="noopener" class="project-card">
-          <div class="project-num">// 12</div>
+          <div class="project-num">// 13</div>
           <div class="project-name">Brenmon <i class="fas fa-arrow-up-right-from-square"></i></div>
           <p class="project-desc">Port of Invoke-ADEnum in Python using impacket and ldap3. Enumerates Active Directory environments with HTML report generation and JSON export &mdash; built for operator efficiency during internal network assessments.</p>
           <span class="project-lang"><span class="lang-dot lang-python"></span> Python</span>
@@ -2244,6 +2339,16 @@
   </div>
 </footer>
 
+<!-- SVG filters (pen-marker handwritten underline) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="pen-marker">
+      <feTurbulence type="fractalNoise" baseFrequency="0 0.16" numOctaves="1" result="warp"/>
+      <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="6" in="SourceGraphic" in2="warp"/>
+    </filter>
+  </defs>
+</svg>
+
 <script>
   // ── Boot sequence intro ──
   (function bootIntro() {
@@ -2278,6 +2383,61 @@
     overlay.addEventListener('touchstart', skip, { once: true, passive: true });
     document.addEventListener('keydown', skip, { once: true });
     document.addEventListener('wheel', skip, { once: true, passive: true });
+  })();
+
+  // ── Letter-scramble on hover ──
+  (function scrambleSetup() {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+    const CHARS = '!@#$%&*+=?<>{}[]/\\|01ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const scrambleDur = 180;   // each char scrambles for this many ms
+    const staggerDur  = 220;   // total stagger across the word
+    const updateGap   = 50;    // visible scramble update interval (ms)
+
+    function scramble(target) {
+      if (!target) return;
+      if (!target.dataset.origText) target.dataset.origText = target.textContent;
+      const orig = target.dataset.origText;
+      const len  = orig.length;
+      if (len === 0) return;
+      if (target._raf) cancelAnimationFrame(target._raf);
+
+      const start = performance.now();
+      let lastUpdate = 0;
+      const total = scrambleDur + staggerDur;
+
+      function frame(now) {
+        const elapsed = now - start;
+        if (now - lastUpdate >= updateGap) {
+          lastUpdate = now;
+          let out = '';
+          for (let i = 0; i < len; i++) {
+            const lockAt = (i / len) * staggerDur + scrambleDur;
+            if (elapsed >= lockAt || orig[i] === ' ') {
+              out += orig[i];
+            } else {
+              out += CHARS[(Math.random() * CHARS.length) | 0];
+            }
+          }
+          target.textContent = out;
+        }
+        if (elapsed < total) {
+          target._raf = requestAnimationFrame(frame);
+        } else {
+          target.textContent = orig;
+          target._raf = null;
+        }
+      }
+      target._raf = requestAnimationFrame(frame);
+    }
+
+    document.querySelectorAll('[data-scramble-hover]').forEach(parent => {
+      const tgt = parent.querySelector('[data-scramble-target]');
+      if (!tgt) return;
+      const trigger = () => scramble(tgt);
+      parent.addEventListener('mouseenter', trigger);
+      parent.addEventListener('focusin', trigger);
+    });
   })();
 
   // Hamburger toggle
