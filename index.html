@@ -1680,6 +1680,135 @@
       will-change: contents;
     }
 
+    /* ════════ VULNERABILITY RESEARCH ════════ */
+    .vuln-research-intro {
+      color: var(--text-dim);
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
+      max-width: 720px;
+    }
+    .vuln-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 1rem;
+    }
+    .vuln-card {
+      background: var(--glass);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--hairline);
+      border-radius: 0;
+      padding: 1.5rem;
+      text-decoration: none;
+      display: flex; flex-direction: column;
+      position: relative; overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+      min-height: 240px;
+    }
+    .vuln-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blood) 50%, transparent);
+      opacity: 0; transition: opacity 0.3s ease;
+      box-shadow: 0 0 10px var(--blood-glow);
+    }
+    .vuln-card::after {
+      content: ''; position: absolute;
+      left: 0; top: 0; bottom: 0; width: 2px;
+      background: linear-gradient(180deg, var(--blood), transparent);
+      transform: scaleY(0); transform-origin: top;
+      transition: transform 0.35s ease;
+      box-shadow: 0 0 12px var(--blood-glow);
+    }
+    .vuln-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--blood);
+      box-shadow:
+        0 0 30px rgba(255,0,51,0.15),
+        0 18px 40px -20px rgba(255,0,51,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .vuln-card:hover::before { opacity: 1; }
+    .vuln-card:hover::after  { transform: scaleY(1); }
+
+    .vuln-severity {
+      font-family: var(--font-mono);
+      font-size: 0.67rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      padding: 0.28rem 0.65rem; border-radius: 3px;
+      display: inline-block; align-self: flex-start;
+      margin-bottom: 0.85rem; border: 1px solid;
+    }
+    .vuln-severity.high {
+      background: rgba(255,56,89,0.08); color: var(--crimson);
+      border-color: rgba(255,56,89,0.4);
+      box-shadow: 0 0 10px var(--crimson-glow), inset 0 0 8px rgba(255,56,89,0.06);
+      text-shadow: 0 0 8px var(--crimson-glow);
+    }
+
+    .vuln-repo {
+      font-family: var(--font-mono);
+      font-size: 0.72rem; color: var(--cyan);
+      font-weight: 500; margin-bottom: 0.45rem;
+      letter-spacing: 0.06em;
+      text-shadow: 0 0 8px var(--cyan-glow);
+    }
+    .vuln-repo::before { content: '@ '; color: var(--text-muted); }
+
+    .vuln-title {
+      font-family: var(--font-display);
+      font-size: 0.88rem; font-weight: 600;
+      color: var(--text); margin-bottom: 0.65rem;
+      line-height: 1.3; letter-spacing: 0.01em;
+      text-transform: uppercase;
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem;
+    }
+    .vuln-title i {
+      font-size: 0.72rem; color: var(--text-muted);
+      flex-shrink: 0; margin-top: 3px;
+      transition: color 0.22s, transform 0.22s, text-shadow 0.22s;
+    }
+    .vuln-card:hover .vuln-title i {
+      color: var(--blood);
+      text-shadow: 0 0 8px var(--blood-glow);
+      transform: translate(2px, -2px);
+    }
+
+    .vuln-desc {
+      font-size: 0.84rem; color: var(--text-dim);
+      line-height: 1.6; margin-bottom: 1rem; flex: 1;
+    }
+
+    .vuln-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .vuln-tag {
+      font-size: 0.7rem;
+      padding: 0.22rem 0.55rem;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 3px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+    .vuln-tag.cwe {
+      color: var(--warn);
+      border-color: rgba(255,199,0,0.3);
+      background: var(--warn-soft);
+    }
+    .vuln-tag.advisory {
+      color: var(--matrix);
+      border-color: rgba(57,255,133,0.3);
+      background: rgba(57,255,133,0.06);
+    }
+    .vuln-tag.pending {
+      color: var(--warn);
+      border-color: rgba(255,199,0,0.3);
+      background: var(--warn-soft);
+    }
+    .vuln-card { cursor: default; }
+
     /* ════════ REDUCED MOTION ════════ */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -1742,6 +1871,7 @@
     <li><a href="#experience" data-scramble-hover="link"><span data-scramble-target>Experience</span></a></li>
     <li><a href="#certifications" data-scramble-hover="link"><span data-scramble-target>Certs</span></a></li>
     <li><a href="#publications" data-scramble-hover="link"><span data-scramble-target>Publications</span></a></li>
+    <li><a href="#research" data-scramble-hover="link"><span data-scramble-target>Research</span></a></li>
     <li><a href="#reports" data-scramble-hover="link"><span data-scramble-target>Reports</span></a></li>
   </ul>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
@@ -2277,6 +2407,108 @@
   </div>
 </section>
 
+<!-- ════════ VULNERABILITY RESEARCH ════════ -->
+<section id="research">
+  <div class="container">
+    <div class="section-header">
+      <div class="kicker">// grep -r "cve" ~/disclosures</div>
+      <h2 class="section-title">Vuln <em>research.</em><span class="section-jp">開示</span></h2>
+    </div>
+    <p class="vuln-research-intro">
+      Original vulnerability research in open-source healthcare software, submitted through responsible
+      disclosure channels.
+    </p>
+
+    <div class="vuln-grid">
+
+      <!-- Finding 01 — Platform A: Authorization Bypass -->
+      <div class="vuln-card">
+        <span class="vuln-severity high">HIGH</span>
+        <div class="vuln-repo">Open-Source Healthcare EMR</div>
+        <div class="vuln-title">Authorization Bypass via Unsanitized API Parameter</div>
+        <p class="vuln-desc">Any authenticated patient-portal user can overwrite the status field of any database record by supplying an attacker-controlled doctype value. No ownership, permission, or allowlist check is enforced before the raw SQL write executes.</p>
+        <div class="vuln-tags">
+          <span class="vuln-tag cwe">CWE-639</span>
+          <span class="vuln-tag">BOLA / IDOR</span>
+          <span class="vuln-tag">Missing AuthZ</span>
+          <span class="vuln-tag pending">Pending Disclosure</span>
+        </div>
+      </div>
+
+      <!-- Finding 02 — Platform A: Patient Data Disclosure -->
+      <div class="vuln-card">
+        <span class="vuln-severity high">HIGH</span>
+        <div class="vuln-repo">Open-Source Healthcare EMR</div>
+        <div class="vuln-title">Full Patient Record Disclosed Without Authorization Check</div>
+        <p class="vuln-desc">A patient-facing API endpoint returns complete patient PII &mdash; including date of birth, blood group, insurance data, and vital signs &mdash; to any authenticated user. No ownership or role check is applied before the database query executes.</p>
+        <div class="vuln-tags">
+          <span class="vuln-tag cwe">CWE-862</span>
+          <span class="vuln-tag">Sensitive Data Exposure</span>
+          <span class="vuln-tag">Missing AuthZ</span>
+          <span class="vuln-tag pending">Pending Disclosure</span>
+        </div>
+      </div>
+
+      <!-- Finding 03 — Platform B: SSRF -->
+      <div class="vuln-card">
+        <span class="vuln-severity high">HIGH &middot; CVSS 8.6</span>
+        <div class="vuln-repo">Open-Source Medical Records System</div>
+        <div class="vuln-title">SSRF via User-Controlled URL Parameter in Setup Wizard</div>
+        <p class="vuln-desc">The unauthenticated initial-setup wizard accepts an arbitrary URL parameter with no scheme, host, or RFC&nbsp;1918 validation. An unauthenticated network attacker can force outbound HTTP requests to internal infrastructure and enumerate live hosts via response-time analysis.</p>
+        <div class="vuln-tags">
+          <span class="vuln-tag cwe">CWE-918</span>
+          <span class="vuln-tag">SSRF</span>
+          <span class="vuln-tag">Pre-Auth</span>
+          <span class="vuln-tag pending">Pending Disclosure</span>
+        </div>
+      </div>
+
+      <!-- Finding 04 — Platform C: Stored XSS -->
+      <div class="vuln-card">
+        <span class="vuln-severity high">HIGH</span>
+        <div class="vuln-repo">Open-Source EMR Suite</div>
+        <div class="vuln-title">Stored XSS via Unsanitized Document Note Field</div>
+        <p class="vuln-desc">Raw document-note content is rendered without output encoding into a clinical report via a rich-text editor&rsquo;s innerHTML path. A lower-privileged user can persist a payload that executes in the browser session of any clinician or admin who subsequently views the report.</p>
+        <div class="vuln-tags">
+          <span class="vuln-tag cwe">CWE-79</span>
+          <span class="vuln-tag">Stored XSS</span>
+          <span class="vuln-tag">Session Hijacking</span>
+          <span class="vuln-tag pending">Pending Disclosure</span>
+        </div>
+      </div>
+
+      <!-- Finding 05 — Platform C: IDOR -->
+      <div class="vuln-card">
+        <span class="vuln-severity high">HIGH</span>
+        <div class="vuln-repo">Open-Source EMR Suite</div>
+        <div class="vuln-title">IDOR &mdash; Patient Portal Settings Written for Arbitrary Patient ID</div>
+        <p class="vuln-desc">A patient-portal settings endpoint accepts a user-controlled patient identifier without comparing it against the authenticated session. Any portal patient can overwrite another patient&rsquo;s settings by substituting a different ID in the request body.</p>
+        <div class="vuln-tags">
+          <span class="vuln-tag cwe">CWE-639</span>
+          <span class="vuln-tag">IDOR</span>
+          <span class="vuln-tag">Missing AuthZ</span>
+          <span class="vuln-tag pending">Pending Disclosure</span>
+        </div>
+      </div>
+
+      <!-- Finding 06 — Platform C: Reflected XSS -->
+      <div class="vuln-card">
+        <span class="vuln-severity high">HIGH</span>
+        <div class="vuln-repo">Open-Source EMR Suite</div>
+        <div class="vuln-title">Reflected XSS via Rich-Text Editor Template Parameter</div>
+        <p class="vuln-desc">A GET parameter is placed into a textarea from which a rich-text editor reads the value and sets innerHTML, browser-decoding HTML entities back to executable markup. A crafted URL delivered to any authenticated portal admin triggers immediate script execution with no stored state required.</p>
+        <div class="vuln-tags">
+          <span class="vuln-tag cwe">CWE-79</span>
+          <span class="vuln-tag">Reflected XSS</span>
+          <span class="vuln-tag">Session Hijacking</span>
+          <span class="vuln-tag pending">Pending Disclosure</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ════════ SAMPLE REPORTS ════════ -->
 <section id="reports">
   <div class="container">
@@ -2469,7 +2701,7 @@
   // Fade-in on scroll (respects reduced-motion)
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reduceMotion) {
-    const fadeEls = document.querySelectorAll('.project-card, .cert-card, .pub-card, .report-card, .experience-item, .about-aside, .about-text');
+    const fadeEls = document.querySelectorAll('.project-card, .cert-card, .pub-card, .vuln-card, .report-card, .experience-item, .about-aside, .about-text');
     const fadeIO  = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
