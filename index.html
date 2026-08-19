@@ -1746,6 +1746,12 @@
       box-shadow: 0 0 10px var(--crimson-glow), inset 0 0 8px rgba(255,56,89,0.06);
       text-shadow: 0 0 8px var(--crimson-glow);
     }
+    .vuln-severity.medium {
+      background: rgba(255,199,0,0.08); color: var(--warn);
+      border-color: rgba(255,199,0,0.4);
+      box-shadow: 0 0 10px rgba(255,199,0,0.25), inset 0 0 8px rgba(255,199,0,0.06);
+      text-shadow: 0 0 8px rgba(255,199,0,0.4);
+    }
 
     .vuln-repo {
       font-family: var(--font-mono);
@@ -1755,6 +1761,8 @@
       text-shadow: 0 0 8px var(--cyan-glow);
     }
     .vuln-repo::before { content: '@ '; color: var(--text-muted); }
+    .vuln-repo a { color: inherit; text-decoration: none; }
+    .vuln-repo a:hover { text-decoration: underline; }
 
     .vuln-title {
       font-family: var(--font-display);
@@ -1764,6 +1772,8 @@
       text-transform: uppercase;
       display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem;
     }
+    a.vuln-title { text-decoration: none; transition: color 0.22s; }
+    a.vuln-title:hover { color: var(--blood); }
     .vuln-title i {
       font-size: 0.72rem; color: var(--text-muted);
       flex-shrink: 0; margin-top: 3px;
@@ -2004,7 +2014,7 @@
     <div class="about-grid">
       <div class="about-aside">
         <div class="kicker">// whoami</div>
-        <h2 class="section-title">The <em class="m">operator.</em><span class="section-jp">自己</span></h2>
+        <h2 class="section-title"><em class="m">History.</em><span class="section-jp">自己</span></h2>
       </div>
       <div class="about-text">
         <p>
@@ -2183,7 +2193,7 @@
   <div class="container">
     <div class="section-header">
       <div class="kicker">// cat experience.json</div>
-      <h2 class="section-title">Field <em>operations.</em><span class="section-jp">経験</span></h2>
+      <h2 class="section-title"><em>Experience.</em><span class="section-jp">経験</span></h2>
     </div>
 
     <div class="experience-item">
@@ -2245,7 +2255,7 @@
   <div class="container">
     <div class="section-header">
       <div class="kicker">// grep -r "certified" ~/achievements</div>
-      <h2 class="section-title">Stacked <em class="v">credentials.</em><span class="section-jp">認証</span></h2>
+      <h2 class="section-title"><em class="v">Credentials.</em><span class="section-jp">認証</span></h2>
     </div>
     <div class="certs-grid">
       <div class="cert-card">
@@ -2377,7 +2387,7 @@
   <div class="container">
     <div class="section-header">
       <div class="kicker">// cat publications.md</div>
-      <h2 class="section-title">Writing &amp; <em>research.</em><span class="section-jp">研究</span></h2>
+      <h2 class="section-title"><em>Publications.</em><span class="section-jp">研究</span></h2>
     </div>
     <div class="pubs-grid">
       <a href="https://lyethar.gitbook.io/methodology" target="_blank" rel="noopener" class="pub-card">
@@ -2466,42 +2476,42 @@
       <!-- Finding 04 — Platform C: Stored XSS -->
       <div class="vuln-card">
         <span class="vuln-severity high">HIGH</span>
-        <div class="vuln-repo">Open-Source EMR Suite</div>
-        <div class="vuln-title">Stored XSS via Unsanitized Document Note Field</div>
+        <div class="vuln-repo"><a href="https://www.open-emr.org/" target="_blank" rel="noopener">OpenEMR</a></div>
+        <a class="vuln-title" href="https://github.com/openemr/openemr/security/advisories/GHSA-xwjf-6q28-9vj7#event-941969" target="_blank" rel="noopener">Stored XSS via Unsanitized Document Note Field <i class="fas fa-arrow-up-right-from-square"></i></a>
         <p class="vuln-desc">Raw document-note content is rendered without output encoding into a clinical report via a rich-text editor&rsquo;s innerHTML path. A lower-privileged user can persist a payload that executes in the browser session of any clinician or admin who subsequently views the report.</p>
         <div class="vuln-tags">
           <span class="vuln-tag cwe">CWE-79</span>
           <span class="vuln-tag">Stored XSS</span>
           <span class="vuln-tag">Session Hijacking</span>
-          <span class="vuln-tag pending">Pending Disclosure</span>
+          <span class="vuln-tag advisory">Disclosed</span>
         </div>
       </div>
 
       <!-- Finding 05 — Platform C: IDOR -->
       <div class="vuln-card">
         <span class="vuln-severity high">HIGH</span>
-        <div class="vuln-repo">Open-Source EMR Suite</div>
-        <div class="vuln-title">IDOR &mdash; Patient Portal Settings Written for Arbitrary Patient ID</div>
+        <div class="vuln-repo"><a href="https://www.open-emr.org/" target="_blank" rel="noopener">OpenEMR</a></div>
+        <a class="vuln-title" href="https://github.com/openemr/openemr/security/advisories/GHSA-rrw3-g25h-x68h" target="_blank" rel="noopener">IDOR &mdash; Patient Portal Settings Written for Arbitrary Patient ID <i class="fas fa-arrow-up-right-from-square"></i></a>
         <p class="vuln-desc">A patient-portal settings endpoint accepts a user-controlled patient identifier without comparing it against the authenticated session. Any portal patient can overwrite another patient&rsquo;s settings by substituting a different ID in the request body.</p>
         <div class="vuln-tags">
           <span class="vuln-tag cwe">CWE-639</span>
           <span class="vuln-tag">IDOR</span>
           <span class="vuln-tag">Missing AuthZ</span>
-          <span class="vuln-tag pending">Pending Disclosure</span>
+          <span class="vuln-tag advisory">Disclosed</span>
         </div>
       </div>
 
       <!-- Finding 06 — Platform C: Reflected XSS -->
       <div class="vuln-card">
-        <span class="vuln-severity high">HIGH</span>
-        <div class="vuln-repo">Open-Source EMR Suite</div>
-        <div class="vuln-title">Reflected XSS via Rich-Text Editor Template Parameter</div>
+        <span class="vuln-severity medium">MEDIUM</span>
+        <div class="vuln-repo"><a href="https://www.open-emr.org/" target="_blank" rel="noopener">OpenEMR</a></div>
+        <a class="vuln-title" href="https://github.com/openemr/openemr/security/advisories/GHSA-rmmr-8498-463g" target="_blank" rel="noopener">Reflected XSS via Rich-Text Editor Template Parameter <i class="fas fa-arrow-up-right-from-square"></i></a>
         <p class="vuln-desc">A GET parameter is placed into a textarea from which a rich-text editor reads the value and sets innerHTML, browser-decoding HTML entities back to executable markup. A crafted URL delivered to any authenticated portal admin triggers immediate script execution with no stored state required.</p>
         <div class="vuln-tags">
           <span class="vuln-tag cwe">CWE-79</span>
           <span class="vuln-tag">Reflected XSS</span>
           <span class="vuln-tag">Session Hijacking</span>
-          <span class="vuln-tag pending">Pending Disclosure</span>
+          <span class="vuln-tag advisory">Disclosed</span>
         </div>
       </div>
 
