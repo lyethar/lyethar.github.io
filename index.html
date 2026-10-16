@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fabian Crespo &mdash; Offensive Security</title>
   <meta name="description" content="Portfolio of Fabian Crespo &mdash; Principal Penetration Tester specializing in offensive security, AI/ML adversarial testing, and cloud penetration testing.">
+  <link rel="canonical" href="https://lyethar.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lyethar.github.io/">
+  <meta property="og:title" content="Fabian Crespo &mdash; Offensive Security">
+  <meta property="og:description" content="Principal Penetration Tester specializing in offensive security, AI/ML adversarial testing, and cloud penetration testing.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Fabian Crespo &mdash; Offensive Security">
+  <meta name="twitter:description" content="Principal Penetration Tester specializing in offensive security, AI/ML adversarial testing, and cloud penetration testing.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="theme-color" content="#05050C">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,7 +57,7 @@
       /* ── Text ── */
       --text:          #F0F0F5;
       --text-dim:      #B8B8C8;
-      --text-muted:    #6E6E80;
+      --text-muted:    #85859A;
       --text-faint:    #44445A;
 
       /* ── System ── */
@@ -894,7 +902,7 @@
 
     .pub-type {
       font-family: var(--font-mono);
-      font-size: 0.68rem; font-weight: 700;
+      font-size: 0.72rem; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.15em;
       padding: 0.3rem 0.7rem; border-radius: 3px;
       display: inline-block; margin-bottom: 1rem;
@@ -1031,6 +1039,11 @@
       width: 100%; height: 720px; border: none;
       display: block; background: var(--void-2);
     }
+    .report-fallback {
+      padding: 2rem 1.75rem;
+      color: var(--text-dim); font-size: 0.92rem;
+    }
+    .report-fallback a { color: var(--cyan); text-decoration: underline; text-underline-offset: 3px; }
     .report-footer {
       padding: 1.1rem 1.75rem;
       display: flex; flex-wrap: wrap; gap: 0.45rem;
@@ -1734,7 +1747,7 @@
 
     .vuln-severity {
       font-family: var(--font-mono);
-      font-size: 0.67rem; font-weight: 700;
+      font-size: 0.72rem; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.15em;
       padding: 0.28rem 0.65rem; border-radius: 3px;
       display: inline-block; align-self: flex-start;
@@ -1832,6 +1845,13 @@
       .page-reveal > section, .page-reveal nav { opacity: 1 !important; transform: none !important; }
     }
   </style>
+  <noscript>
+    <style>
+      /* Without JS the boot overlay never dismisses and page-reveal never fires */
+      .boot { display: none !important; }
+      .page-reveal > section, .page-reveal nav { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
 </head>
 <body>
 
@@ -1907,7 +1927,7 @@
   <div class="hero-stickers" aria-hidden="true">
     <span class="sticker sticker--red">RUN_2026</span>
     <span class="sticker">TIER · PRINCIPAL</span>
-    <span class="sticker sticker--cyan">OPS · 270+</span>
+    <span class="sticker sticker--cyan">OPS · ~270</span>
   </div>
 
   <div class="hero-content">
@@ -2544,11 +2564,16 @@
           </a>
         </div>
       </div>
-      <embed
-        src="assets/reports/Prometheon_AI_Penetration_Testing_Report.pdf"
+      <object
+        data="assets/reports/Prometheon_AI_Penetration_Testing_Report.pdf"
         type="application/pdf"
         class="report-viewer"
         title="AI Application Penetration Test Report">
+        <p class="report-fallback">
+          Your browser can&rsquo;t display the PDF inline.
+          <a href="assets/reports/Prometheon_AI_Penetration_Testing_Report.pdf" target="_blank" rel="noopener">Open the report <i class="fas fa-arrow-up-right-from-square"></i></a>
+        </p>
+      </object>
       <div class="report-footer">
         <span class="skill-tag">AI/ML Security</span>
         <span class="skill-tag">Prompt Injection</span>
