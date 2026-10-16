@@ -1537,6 +1537,7 @@
         inset 0 1px 0 rgba(255,255,255,0.04);
     }
     .hero-stats .divider { background: rgba(255,255,255,0.1); }
+    .hero-stats { width: fit-content; max-width: 100%; }  /* keep clear of the hero tower */
 
     /* Project card: add LVL sticker treatment via .project-num bracket prefix */
     .project-card { border-radius: 0; }
@@ -1832,6 +1833,195 @@
     }
     .vuln-card { cursor: default; }
 
+    /* ════════ WIREFRAME / SCROLL LAYER ════════ */
+
+    /* Segmented scroll-progress bar under the nav */
+    .scroll-progress {
+      position: fixed; top: 64px; left: 0; right: 0; height: 3px;
+      z-index: 99; pointer-events: none;
+      -webkit-mask: repeating-linear-gradient(90deg, #000 0 28px, transparent 28px 32px);
+              mask: repeating-linear-gradient(90deg, #000 0 28px, transparent 28px 32px);
+    }
+    .scroll-progress span {
+      display: block; height: 100%;
+      background: var(--blood);
+      box-shadow: 0 0 10px var(--blood-glow);
+      transform: scaleX(var(--p, 0)); transform-origin: left;
+    }
+
+    /* Shared line-art strokes */
+    .wf {
+      fill: none; stroke: rgba(240,240,245,0.55); stroke-width: 1;
+      vector-effect: non-scaling-stroke;
+    }
+    .wf-dim { stroke: rgba(240,240,245,0.22); }
+    .wf-red { stroke: var(--blood); }
+    .star-red { fill: var(--blood); filter: drop-shadow(0 0 10px var(--blood-glow)); }
+
+    /* Hero: stacked-ring coil + four-point star + wireframe globe */
+    .hero-tower {
+      display: none;
+      position: absolute; top: 50%; right: clamp(2rem, 7vw, 8rem);
+      width: clamp(200px, 17vw, 250px);
+      transform: translateY(calc(-50% + var(--py, 0px)));
+      z-index: 1; pointer-events: none;
+    }
+    @media (min-width: 1100px) { .hero-tower { display: block; } }
+    .hero-tower svg { width: 100%; height: auto; overflow: visible; }
+    .coil ellipse {
+      transform-box: fill-box; transform-origin: center;
+      animation: coil 4.8s ease-in-out infinite;
+      animation-delay: calc(var(--i) * -0.3s);
+    }
+    @keyframes coil {
+      0%, 100% { transform: translateY(0) scaleX(1); }
+      50%      { transform: translateY(-4px) scaleX(0.94); }
+    }
+    .tower-star {
+      transform-box: fill-box; transform-origin: center;
+      animation: starPulse 3.2s ease-in-out infinite;
+    }
+    @keyframes starPulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.07); }
+    }
+    .globe .mer {
+      transform-box: fill-box; transform-origin: center;
+      transform: scaleX(var(--s));
+      animation: globeSpin 9s linear infinite;
+      animation-delay: calc(var(--i) * -0.75s);
+    }
+    @keyframes globeSpin {
+      0%   { transform: scaleX(1); }
+      25%  { transform: scaleX(0); }
+      50%  { transform: scaleX(-1); }
+      75%  { transform: scaleX(0); }
+      100% { transform: scaleX(1); }
+    }
+
+    /* About: framed dossier panel with corner handles and sunburst */
+    .dossier { display: none; }
+    @media (min-width: 1000px) {
+      .about-grid {
+        display: grid; max-width: none;
+        grid-template-columns: minmax(0, 760px) minmax(260px, 320px);
+        grid-template-areas: "aside panel" "text panel";
+        column-gap: clamp(3rem, 6vw, 6rem);
+        align-items: start;
+      }
+      .about-aside { grid-area: aside; }
+      .about-text  { grid-area: text; }
+      .dossier {
+        grid-area: panel; display: block;
+        position: sticky; top: 96px;
+        padding: 1.25rem 1.25rem 1.1rem;
+        border: 1px solid var(--hairline-2);
+        background: var(--glass-soft);
+        font-family: var(--font-mono);
+        font-size: 0.72rem; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--text-muted);
+      }
+    }
+    .dossier .hdl {
+      position: absolute; width: 9px; height: 9px;
+      border: 1px solid rgba(240,240,245,0.6); background: var(--void);
+    }
+    .dossier .hdl:nth-child(1) { top: -5px; left: -5px; }
+    .dossier .hdl:nth-child(2) { top: -5px; right: -5px; }
+    .dossier .hdl:nth-child(3) { bottom: -5px; left: -5px; }
+    .dossier .hdl:nth-child(4) { bottom: -5px; right: -5px; }
+    .dossier-head {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 0.8rem; margin-bottom: 1rem;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .dossier-head b { color: var(--blood); font-weight: 700; }
+    .dossier .burst { display: block; width: 100%; height: auto; }
+    .burst-rays {
+      fill: none; stroke: var(--blood); stroke-width: 65;
+      stroke-dasharray: 1 9;
+      transform-box: fill-box; transform-origin: center;
+      animation: spin 80s linear infinite;
+    }
+    .burst-core { fill: var(--void); }
+    .burst-tri  { fill: var(--blood); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .dossier-rows { margin: 1rem 0; display: grid; gap: 0.45rem; }
+    .dossier-rows div { display: flex; justify-content: space-between; gap: 1rem; }
+    .dossier-rows span:last-child { color: var(--text); }
+    .barcode {
+      height: 34px;
+      background: linear-gradient(90deg,
+        var(--text) 0 2px, transparent 2px 5px, var(--text) 5px 6px, transparent 6px 8px,
+        var(--text) 8px 11px, transparent 11px 13px, var(--text) 13px 14px, transparent 14px 18px,
+        var(--text) 18px 20px, transparent 20px 21px, var(--text) 21px 22px, transparent 22px 26px,
+        var(--text) 26px 29px, transparent 29px 31px, var(--text) 31px 32px, transparent 32px 34px);
+      background-size: 34px 100%;
+      opacity: 0.75;
+    }
+    .dossier-serial { margin-top: 0.5rem; font-size: 0.72rem; letter-spacing: 0.2em; }
+
+    /* Section index numerals (outlined, parallax) */
+    .section-header[data-idx]::after {
+      content: attr(data-idx);
+      position: absolute; right: 0; top: 50%;
+      font-family: var(--font-display); font-weight: 900;
+      font-size: clamp(4.5rem, 13vw, 10rem); line-height: 1;
+      letter-spacing: -0.02em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,0,51,0.3);
+      transform: translateY(calc(-50% + var(--py, 0px)));
+      pointer-events: none; z-index: -1;
+    }
+
+    /* Spec band: ringed stars, segmented bar, section code */
+    .spec-band {
+      display: flex; align-items: center; gap: 1rem;
+      margin-top: 1.25rem; max-width: 560px;
+    }
+    .sb-dots {
+      flex: none; width: 92px; height: 20px; opacity: 0.75;
+      background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 23 20'><circle cx='10' cy='10' r='8.5' fill='none' stroke='white'/><path d='M10 4.5C10.4 9 11 9.6 15.5 10 11 10.4 10.4 11 10 15.5 9.6 11 9 10.4 4.5 10 9 9.6 9.6 9 10 4.5Z' fill='white'/></svg>") 0 50% / 23px 20px repeat-x;
+    }
+    .sb-bar {
+      flex: 1; min-width: 60px; height: 8px;
+      background: linear-gradient(90deg,
+        var(--blood) 0 55%, transparent 55% 57%,
+        var(--blood) 57% 79%, transparent 79% 81%,
+        var(--blood) 81% 89%, transparent 89% 91%,
+        var(--blood) 91% 100%);
+      transform-origin: left;
+    }
+    .sb-code {
+      flex: none; font-family: var(--font-mono);
+      font-size: 0.72rem; letter-spacing: 0.14em;
+      color: var(--text-muted); white-space: nowrap;
+    }
+    @media (max-width: 480px) { .sb-dots { display: none; } }
+
+    /* Scroll-triggered states — only when JS runs and motion is allowed */
+    .js-anim .draw {
+      stroke-dasharray: 1; stroke-dashoffset: 1;
+      transition: stroke-dashoffset 1.6s cubic-bezier(.6,0,.2,1);
+      transition-delay: calc(var(--i, 0) * 80ms);
+    }
+    .js-anim body.booted .is-in .draw { stroke-dashoffset: 0; }
+    .js-anim .section-header .section-title {
+      clip-path: inset(-20% 100% -20% 0);
+      transition: clip-path 0.9s cubic-bezier(.7,0,.2,1);
+    }
+    .js-anim .section-header.is-in .section-title { clip-path: inset(-20% -10% -20% 0); }
+    .js-anim .section-header .sb-bar {
+      transform: scaleX(0);
+      transition: transform 1s cubic-bezier(.6,0,.2,1) 0.3s;
+    }
+    .js-anim .section-header.is-in .sb-bar { transform: none; }
+    .js-anim .dossier .burst {
+      opacity: 0; transform: scale(0.7) rotate(-40deg);
+      transition: opacity 0.8s ease, transform 1.2s cubic-bezier(.2,.7,.2,1);
+    }
+    .js-anim .dossier.is-in .burst { opacity: 1; transform: none; }
+
     /* ════════ REDUCED MOTION ════════ */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -1845,6 +2035,10 @@
       .page-reveal > section, .page-reveal nav { opacity: 1 !important; transform: none !important; }
     }
   </style>
+  <script>
+    // Set before first paint so scroll-reveal start states don't flash
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js-anim');
+  </script>
   <noscript>
     <style>
       /* Without JS the boot overlay never dismisses and page-reveal never fires */
@@ -1889,6 +2083,8 @@
 
 <div class="page-reveal">
 
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
+
 <!-- ════════ NAV ════════ -->
 <nav>
   <a href="#hero" class="nav-logo">
@@ -1928,6 +2124,35 @@
     <span class="sticker sticker--red">RUN_2026</span>
     <span class="sticker">TIER · PRINCIPAL</span>
     <span class="sticker sticker--cyan">OPS · ~270</span>
+  </div>
+
+  <!-- Wireframe coil + star + globe (desktop only) -->
+  <div class="hero-tower" data-parallax="-0.3" data-reveal aria-hidden="true">
+    <svg viewBox="0 0 240 440">
+      <g class="coil">
+        <ellipse class="wf draw" pathLength="1" cx="120" cy="40"  rx="100" ry="16" style="--i:0"/>
+        <ellipse class="wf draw" pathLength="1" cx="120" cy="70"  rx="100" ry="16" style="--i:1"/>
+        <ellipse class="wf draw" pathLength="1" cx="120" cy="100" rx="100" ry="16" style="--i:2"/>
+        <ellipse class="wf draw" pathLength="1" cx="120" cy="130" rx="100" ry="16" style="--i:3"/>
+        <ellipse class="wf draw" pathLength="1" cx="120" cy="160" rx="100" ry="16" style="--i:4"/>
+        <ellipse class="wf draw" pathLength="1" cx="120" cy="190" rx="100" ry="16" style="--i:5"/>
+        <ellipse class="wf draw" pathLength="1" cx="120" cy="220" rx="100" ry="16" style="--i:6"/>
+        <ellipse class="wf draw" pathLength="1" cx="120" cy="250" rx="100" ry="16" style="--i:7"/>
+        <ellipse class="wf draw" pathLength="1" cx="120" cy="280" rx="100" ry="16" style="--i:8"/>
+      </g>
+      <use href="#i-star" class="tower-star star-red" x="55" y="70" width="130" height="180"/>
+      <g class="globe">
+        <circle class="wf draw" pathLength="1" cx="120" cy="380" r="42" style="--i:9"/>
+        <path class="wf wf-dim" d="M78 380h84M80.4 366h79.2M80.4 394h79.2M88.7 352h62.6M88.7 408h62.6"/>
+        <ellipse class="wf wf-dim mer" cx="120" cy="380" rx="42" ry="42" style="--i:0;--s:1"/>
+        <ellipse class="wf wf-dim mer" cx="120" cy="380" rx="42" ry="42" style="--i:1;--s:.87"/>
+        <ellipse class="wf wf-dim mer" cx="120" cy="380" rx="42" ry="42" style="--i:2;--s:.5"/>
+        <ellipse class="wf wf-dim mer" cx="120" cy="380" rx="42" ry="42" style="--i:3;--s:0"/>
+        <ellipse class="wf wf-dim mer" cx="120" cy="380" rx="42" ry="42" style="--i:4;--s:-.5"/>
+        <ellipse class="wf wf-dim mer" cx="120" cy="380" rx="42" ry="42" style="--i:5;--s:-.87"/>
+      </g>
+      <path class="wf wf-red" d="M28 380h16M36 372v16M196 380h16M204 372v16"/>
+    </svg>
   </div>
 
   <div class="hero-content">
@@ -2032,9 +2257,10 @@
 <section id="about">
   <div class="container">
     <div class="about-grid">
-      <div class="about-aside">
+      <div class="about-aside section-header" data-idx="01">
         <div class="kicker">// whoami</div>
         <h2 class="section-title"><em class="m">History.</em><span class="section-jp">自己</span></h2>
+        <div class="spec-band" aria-hidden="true"><span class="sb-dots"></span><span class="sb-bar"></span><span class="sb-code">SEC.01 // WHOAMI</span></div>
       </div>
       <div class="about-text">
         <p>
@@ -2072,6 +2298,27 @@
           <span class="skill-tag">Malware Dev Essentials</span>
         </div>
       </div>
+
+      <!-- Dossier panel (decorative, desktop only) -->
+      <div class="dossier" data-reveal aria-hidden="true">
+        <span class="hdl"></span><span class="hdl"></span><span class="hdl"></span><span class="hdl"></span>
+        <div class="dossier-head"><span>File // <b>0x2021</b></span><span>Lvl.04</span></div>
+        <svg class="burst" viewBox="0 0 200 200">
+          <polygon class="burst-tri" points="6,6 26,6 6,26"/>
+          <polygon class="burst-tri" points="194,194 174,194 194,174"/>
+          <circle class="burst-rays" cx="100" cy="100" r="62.5" pathLength="360"/>
+          <circle class="burst-core" cx="100" cy="100" r="26"/>
+          <use href="#i-star" class="star-red" x="78" y="78" width="44" height="44"/>
+        </svg>
+        <div class="dossier-rows">
+          <div><span>Subject</span><span>F. Crespo</span></div>
+          <div><span>Class</span><span>Principal</span></div>
+          <div><span>Active since</span><span>2021</span></div>
+          <div><span>BJJ</span><span>Blue belt</span></div>
+        </div>
+        <div class="barcode"></div>
+        <div class="dossier-serial">LYT-OSCP-OSEP-CRTO</div>
+      </div>
     </div>
   </div>
 </section>
@@ -2079,9 +2326,10 @@
 <!-- ════════ PROJECTS ════════ -->
 <section id="projects">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header" data-idx="02">
       <div class="kicker">// ls -la ~/projects</div>
       <h2 class="section-title">Selected <em>projects.</em><span class="section-jp">作品</span></h2>
+      <div class="spec-band" aria-hidden="true"><span class="sb-dots"></span><span class="sb-bar"></span><span class="sb-code">SEC.02 // 13 ENTRIES</span></div>
     </div>
 
     <!-- AI Projects -->
@@ -2211,9 +2459,10 @@
 <!-- ════════ EXPERIENCE ════════ -->
 <section id="experience">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header" data-idx="03">
       <div class="kicker">// cat experience.json</div>
       <h2 class="section-title"><em>Experience.</em><span class="section-jp">経験</span></h2>
+      <div class="spec-band" aria-hidden="true"><span class="sb-dots"></span><span class="sb-bar"></span><span class="sb-code">SEC.03 // OCT 2022 &rarr; NOW</span></div>
     </div>
 
     <div class="experience-item">
@@ -2273,9 +2522,10 @@
 <!-- ════════ CERTIFICATIONS ════════ -->
 <section id="certifications">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header" data-idx="04">
       <div class="kicker">// grep -r "certified" ~/achievements</div>
       <h2 class="section-title"><em class="v">Credentials.</em><span class="section-jp">認証</span></h2>
+      <div class="spec-band" aria-hidden="true"><span class="sb-dots"></span><span class="sb-bar"></span><span class="sb-code">SEC.04 // 15 VERIFIED</span></div>
     </div>
     <div class="certs-grid">
       <div class="cert-card">
@@ -2405,9 +2655,10 @@
 <!-- ════════ PUBLICATIONS ════════ -->
 <section id="publications">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header" data-idx="05">
       <div class="kicker">// cat publications.md</div>
       <h2 class="section-title"><em>Publications.</em><span class="section-jp">研究</span></h2>
+      <div class="spec-band" aria-hidden="true"><span class="sb-dots"></span><span class="sb-bar"></span><span class="sb-code">SEC.05 // 02 DOCS</span></div>
     </div>
     <div class="pubs-grid">
       <a href="https://lyethar.gitbook.io/methodology" target="_blank" rel="noopener" class="pub-card">
@@ -2440,9 +2691,10 @@
 <!-- ════════ VULNERABILITY RESEARCH ════════ -->
 <section id="research">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header" data-idx="06">
       <div class="kicker">// grep -r "cve" ~/disclosures</div>
       <h2 class="section-title">Vuln <em>research.</em><span class="section-jp">開示</span></h2>
+      <div class="spec-band" aria-hidden="true"><span class="sb-dots"></span><span class="sb-bar"></span><span class="sb-code">SEC.06 // 06 FINDINGS</span></div>
     </div>
     <p class="vuln-research-intro">
       Original vulnerability research in open-source healthcare software, submitted through responsible
@@ -2542,9 +2794,10 @@
 <!-- ════════ SAMPLE REPORTS ════════ -->
 <section id="reports">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header" data-idx="07">
       <div class="kicker">// ls -la ~/reports</div>
       <h2 class="section-title">Sample <em>reports.</em><span class="section-jp">報告</span></h2>
+      <div class="spec-band" aria-hidden="true"><span class="sb-dots"></span><span class="sb-bar"></span><span class="sb-code">SEC.07 // PDF</span></div>
     </div>
     <p class="reports-intro">
       The following sanitized report demonstrates the depth and quality of findings produced during
@@ -2609,6 +2862,9 @@
 <!-- SVG filters (pen-marker handwritten underline) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
+    <symbol id="i-star" viewBox="-50 -50 100 100" preserveAspectRatio="none">
+      <path d="M0-50C4-10 10-4 50 0 10 4 4 10 0 50-4 10-10 4-50 0-10-4-4-10 0-50Z"/>
+    </symbol>
     <filter id="pen-marker">
       <feTurbulence type="fractalNoise" baseFrequency="0 0.16" numOctaves="1" result="warp"/>
       <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="6" in="SourceGraphic" in2="warp"/>
@@ -2622,13 +2878,14 @@
     const overlay = document.getElementById('bootOverlay');
     if (!overlay) return;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const seen   = sessionStorage.getItem('bootShown') === '1';
+    let seen = false;
+    try { seen = sessionStorage.getItem('bootShown') === '1'; } catch (_) {}  // storage can be blocked
 
     const endBoot = () => {
       if (overlay.classList.contains('exit')) return;
       overlay.classList.add('exit');
       document.body.classList.add('booted');
-      sessionStorage.setItem('bootShown', '1');
+      try { sessionStorage.setItem('bootShown', '1'); } catch (_) {}
       setTimeout(() => { overlay.remove(); }, 700);
     };
 
@@ -2747,12 +3004,63 @@
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     fadeEls.forEach(el => {
+      // Stagger siblings in the same grid row-ish; cap so long grids don't lag
+      const idx = Array.prototype.indexOf.call(el.parentElement.children, el) % 6;
       el.style.opacity = '0';
       el.style.transform = 'translateY(14px)';
       el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      el.style.transitionDelay = (idx * 70) + 'ms';
+      // Drop the inline transition afterwards so the cards' own hover transitions work again
+      el.addEventListener('transitionend', function done(ev) {
+        if (ev.propertyName !== 'opacity') return;
+        ['opacity', 'transform', 'transition', 'transition-delay'].forEach(p => el.style.removeProperty(p));
+        el.removeEventListener('transitionend', done);
+      });
       fadeIO.observe(el);
     });
   }
+
+  // ── Scroll layer: reveal triggers, parallax, progress bar ──
+  (function scrollLayer() {
+    const root   = document.documentElement;
+    const bar    = document.querySelector('.scroll-progress span');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let parallax = [];
+
+    if (!reduce) {
+      const revealIO = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('is-in');
+          revealIO.unobserve(e.target);
+        });
+      }, { threshold: 0.25 });
+      document.querySelectorAll('.section-header, [data-reveal]').forEach(el => revealIO.observe(el));
+
+      // Numerals ride on the section header; the hero tower carries its own data-parallax
+      document.querySelectorAll('.section-header[data-idx]').forEach(el => el.dataset.parallax = '-0.25');
+      // Measure the enclosing section, not the element, so the transform doesn't feed back into the reading
+      parallax = [...document.querySelectorAll('[data-parallax]')]
+        .map(el => ({ el, ref: el.closest('section') || el, k: parseFloat(el.dataset.parallax) }));
+    }
+
+    let ticking = false;
+    function update() {
+      ticking = false;
+      const max = root.scrollHeight - innerHeight;
+      if (bar) bar.style.setProperty('--p', max > 0 ? (scrollY / max).toFixed(4) : 0);
+      const vh = innerHeight;
+      parallax.forEach(({ el, ref, k }) => {
+        const r = ref.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        el.style.setProperty('--py', ((r.top + r.height / 2 - vh / 2) * k).toFixed(1) + 'px');
+      });
+    }
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll);
+    update();
+  })();
 </script>
 </body>
 </html>
